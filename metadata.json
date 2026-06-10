@@ -1,0 +1,6 @@
+{
+  "name": "StudyVault",
+  "description": "A community platform developed by Meet Potdar for college students to share and access previous year question papers, notes, and solutions, featuring AI-generated summaries, exam countdowns, reputation rewards, and structured bookmarks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,11 +1,21 @@
-<div align="center">
+# StudyVault
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Created with ❤️ by **Meet Potdar**
 
-  <h1>Built with AI Studio</h2>
+StudyVault is a community-driven platform for college students to share, find, and organize previous year question papers, notes, and solutions.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Features
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+- **Resource Hub**: Subject-wise categorization of academic papers and notes.
+- **Interactive Previewer**: View documents directly in the browser with search and highlight functionality.
+- **AI-Powered Learning**: Generate summaries, conceptual flashcards, and practice quizzes using Gemini AI.
+- **Community Engagement**: Upvoting system, detailed discussion threads, and a contributor reputation leaderboard. 
+- **Exam Readiness**: Custom exam countdown trackers to keep you on schedule.
 
-</div>
+## Authorship
+
+This project was developed by **Meet Potdar**.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
