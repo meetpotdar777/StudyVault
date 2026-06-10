@@ -28,7 +28,9 @@ import {
   BarChart3,
   CheckCircle,
   BookMarked,
-  Info
+  Info,
+  Trophy,
+  TrendingUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { DocType, Paper, SubjectCategory, Contributor, Countdown } from "./types";
@@ -79,7 +81,7 @@ export default function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [showAddCountdown, setShowAddCountdown] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<"papers" | "leaderboard" | "countdowns">("papers");
+  const [activeTab, setActiveTab] = useState<"papers" | "leaderboard" | "countdowns" | "stats">("papers");
   const [dailyChallengeId, setDailyChallengeId] = useState<string | null>(null);
   const [sessionCount, setSessionCount] = useState(() => {
     const local = localStorage.getItem("studyvault_session_count");
@@ -892,6 +894,15 @@ export default function App() {
                 }}
               />
 
+              {/* Developed By Credit */}
+              <div className="bg-slate-900/50 border border-slate-800/50 rounded-2xl p-4 flex items-center justify-center gap-2 group">
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                  Developed by <span className="text-slate-300 font-bold group-hover:text-indigo-400 transition-colors">Meet Potdar</span>
+                </span>
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              </div>
+
               {/* User XP Rank / Level Progress */}
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xs overflow-hidden relative group">
                 <div className="absolute -right-2 -top-2 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -1128,8 +1139,125 @@ export default function App() {
             {/* Right Column - Directory and Document Listings */}
             <div className="lg:col-span-8 space-y-6">
 
-              {/* Statistics Dashboard */}
-              <DashboardStats papers={papers} />
+              {/* Application Level Tabs System Nav */}
+              <div className="flex flex-wrap items-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl w-fit">
+                <button
+                  onClick={() => setActiveTab("papers")}
+                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
+                    activeTab === "papers" ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                  }`}
+                >
+                  <FileText className="w-4 h-4" />
+                  Papers
+                </button>
+                <button
+                  onClick={() => setActiveTab("leaderboard")}
+                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
+                    activeTab === "leaderboard" ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                  }`}
+                >
+                  <Trophy className="w-4 h-4" />
+                  Leaderboard
+                </button>
+                <button
+                  onClick={() => setActiveTab("stats")}
+                  className={`px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
+                    activeTab === "stats" ? "bg-amber-600 text-white shadow-lg shadow-amber-600/20" : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                  }`}
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  My Stats
+                </button>
+              </div>
+
+              {activeTab === "stats" && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  className="space-y-6"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-indigo-600/10 rounded-lg">
+                          <Zap className="w-5 h-5 text-indigo-400" />
+                        </div>
+                        <span className="text-xs font-bold text-slate-400 uppercase font-mono">Current XP</span>
+                      </div>
+                      <div className="text-3xl font-bold text-white font-mono">{userScore}</div>
+                      <div className="mt-1 text-[10px] text-slate-500 font-medium">Rank Level {level}</div>
+                    </div>
+                    
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-amber-500/10 rounded-lg">
+                          <Flame className="w-5 h-5 text-amber-500" />
+                        </div>
+                        <span className="text-xs font-bold text-slate-400 uppercase font-mono">Focus Time</span>
+                      </div>
+                      <div className="text-3xl font-bold text-white font-mono">{sessionCount}</div>
+                      <div className="mt-1 text-[10px] text-slate-500 font-medium">Sessions fixed</div>
+                    </div>
+
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-emerald-500/10 rounded-lg">
+                          <Bookmark className="w-5 h-5 text-emerald-400" />
+                        </div>
+                        <span className="text-xs font-bold text-slate-400 uppercase font-mono">Resources</span>
+                      </div>
+                      <div className="text-3xl font-bold text-white font-mono">{papers.filter(p => p.bookmarkedByUser).length}</div>
+                      <div className="mt-1 text-[10px] text-slate-500 font-medium">Bookmarked total</div>
+                    </div>
+
+                    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-pink-500/10 rounded-lg">
+                          <Award className="w-5 h-5 text-pink-400" />
+                        </div>
+                        <span className="text-xs font-bold text-slate-400 uppercase font-mono">Views</span>
+                      </div>
+                      <div className="text-3xl font-bold text-white font-mono">{viewCount}</div>
+                      <div className="mt-1 text-[10px] text-slate-500 font-medium">Papers inspected</div>
+                    </div>
+                  </div>
+
+                  <DashboardStats papers={papers} />
+                </motion.div>
+              )}
+
+              {activeTab === "leaderboard" && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} 
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-slate-900 border border-slate-800 rounded-3xl p-6"
+                >
+                   <h3 className="text-base font-bold text-white mb-6">Community Elite: All Contributors</h3>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {leaderboard.map((member) => (
+                        <div key={member.id} className="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+                           <div className="flex items-center gap-3">
+                              <span className="text-xs font-bold text-slate-500 w-4">#{member.rank}</span>
+                              <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${member.name}`} className="w-8 h-8 rounded-lg" alt="" />
+                              <div>
+                                 <div className="text-xs font-bold text-slate-100">{member.name}</div>
+                                 <div className="text-[10px] text-indigo-400 font-medium">{member.badge}</div>
+                              </div>
+                           </div>
+                           <div className="text-right">
+                              <div className="text-xs font-bold text-white">{member.score} XP</div>
+                              <div className="text-[9px] text-slate-500">{member.uploadsCount} papers</div>
+                           </div>
+                        </div>
+                      ))}
+                   </div>
+                </motion.div>
+              )}
+
+              {activeTab === "papers" && (
+                <div className="space-y-6">
+                  {/* Statistics Dashboard */}
+                  <DashboardStats papers={papers} />
 
               {/* Daily Flash Challenge */}
               {challengePaper && (
@@ -1455,8 +1583,10 @@ export default function App() {
                 </div>
               )}
 
-            </div>
+                </div>
+              )}
 
+            </div>
           </div>
         )}
 

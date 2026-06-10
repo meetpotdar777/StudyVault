@@ -1,4 +1,7 @@
 # StudyVault
+
+Created with ❤️ by **Meet Potdar**
+
 StudyVault is a community-driven platform for college students to share, find, and organize previous year question papers, notes, and solutions.
 
 ## Features
